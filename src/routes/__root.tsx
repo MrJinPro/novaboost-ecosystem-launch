@@ -32,11 +32,15 @@ export const Route = createRootRoute({
       { title: "NovaBoost — Экосистема роста TikTok LIVE" },
       { name: "description", content: "NovaBoost — экосистема нового поколения для TikTok LIVE стримеров" },
       { name: "author", content: "NovaBoost" },
-      { property: "og:title", content: "NovaBoost" },
-      { property: "og:description", content: "Экосистема роста TikTok LIVE стримеров" },
+      { property: "og:title", content: "NovaBoost — Экосистема роста TikTok LIVE" },
+      { property: "og:description", content: "NovaBoost — экосистема нового поколения для TikTok LIVE стримеров" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "NovaBoost — Экосистема роста TikTok LIVE" },
+      { name: "twitter:description", content: "NovaBoost — экосистема нового поколения для TikTok LIVE стримеров" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/8ND46JBQ0KNyNTtaYqW8LmKGjut2/social-images/social-1776862658723-file_000000007bc871f498985ef7032bcce0_(1).webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/8ND46JBQ0KNyNTtaYqW8LmKGjut2/social-images/social-1776862658723-file_000000007bc871f498985ef7032bcce0_(1).webp" },
     ],
     links: [
       {
