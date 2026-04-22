@@ -18,7 +18,7 @@ export function HeroSection({ onJoinClick }: { onJoinClick: () => void }) {
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs text-muted-foreground">
-          <span className="inline-block h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+          <span className="inline-block h-2 w-2 rounded-full bg-primary animate-pulse" />
           Готовимся к официальной регистрации TikTok Agency
         </div>
 
