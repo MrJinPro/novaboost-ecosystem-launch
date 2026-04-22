@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/offer")({
+export const Route = createFileRoute('/offer')({
   head: () => ({
     meta: [
       { title: "Договор оферты — NovaBoost" },
