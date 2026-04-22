@@ -69,7 +69,7 @@ export function JoinModal({ open, onClose }: { open: boolean; onClose: () => voi
                 <label className="block text-sm font-medium text-foreground mb-1.5">Кем хотите стать</label>
                 <select
                   required
-                  className="w-full rounded-xl bg-input px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-shadow appearance-none"
+                  className="w-full rounded-xl bg-input px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/50 transition-shadow appearance-none [&>option]:bg-background [&>option]:text-foreground"
                 >
                   <option value="">Выберите роль</option>
                   {roles.map((r) => (

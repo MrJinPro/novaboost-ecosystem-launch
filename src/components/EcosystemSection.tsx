@@ -6,11 +6,11 @@ import toolsImg from "@/assets/novaboost-tools.png";
 import liveImg from "@/assets/novaboost-live.png";
 
 const products = [
-  { img: academyImg, name: "NovaBoost Academy", desc: "Обучающая платформа для стримеров. Курсы, вебинары и персональные программы развития.", tag: "Обучение" },
-  { img: mobileImg, name: "NovaBoost Mobile", desc: "Мобильное приложение для управления стримами и отслеживания статистики на ходу.", tag: "Мобайл" },
-  { img: desktopImg, name: "NovaBoost Desktop", desc: "Десктоп-платформа с расширенными инструментами аналитики и управления.", tag: "Десктоп" },
-  { img: toolsImg, name: "NovaBoost Tools", desc: "Эксклюзивный софт для стримеров агентства: оверлеи, виджеты, автоматизация.", tag: "Инструменты" },
-  { img: liveImg, name: "NovaBoost Live", desc: "Платформа роста для TikTok LIVE. Аналитика в реальном времени и рекомендации.", tag: "LIVE" },
+  { img: toolsImg, name: "NovaBoost Academy", desc: "Обучающая платформа для стримеров. Курсы, вебинары и персональные программы развития. Часть экосистемы NovaBoost Tools.", tag: "Обучение" },
+  { img: mobileImg, name: "NovaBoost Mobile", desc: "Мобильное приложение для управления стримами, отслеживания статистики, озвучки чата и подарков на ходу.", tag: "Мобайл" },
+  { img: desktopImg, name: "NovaBoost Desktop", desc: "Десктоп-платформа с расширенными инструментами: аналитика, озвучка чата, оверлеи, анимации, виджеты и многое другое.", tag: "Десктоп" },
+  { img: toolsImg, name: "NovaBoost Tools", desc: "Эксклюзивный софт для стримеров: оверлеи, виджеты, озвучка чата и подарков, анимации, автоматизация и кастомизация.", tag: "Инструменты" },
+  { img: liveImg, name: "NovaBoost Live", desc: "Платформа роста для TikTok LIVE. Аналитика в реальном времени, рекомендации и инструменты для стримов.", tag: "LIVE" },
 ];
 
 export function EcosystemSection() {
