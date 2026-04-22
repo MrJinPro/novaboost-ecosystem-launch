@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import logoImg from "@/assets/novaboost-logo.png";
 
 export function FooterSection() {
@@ -17,7 +18,7 @@ export function FooterSection() {
             </p>
           </div>
 
-          <div className="flex gap-12 text-sm">
+          <div className="flex flex-wrap gap-12 text-sm">
             <div>
               <h4 className="font-semibold text-foreground mb-3">Продукты</h4>
               <div className="space-y-2 text-muted-foreground">
@@ -31,16 +32,30 @@ export function FooterSection() {
             <div>
               <h4 className="font-semibold text-foreground mb-3">Контакты</h4>
               <div className="space-y-2 text-muted-foreground">
-                <div>Telegram</div>
-                <div>TikTok</div>
-                <div>Email</div>
+                <div><a href="https://t.me/novaboost_live" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Telegram</a></div>
+                <div><a href="mailto:contact@novaboost.cloud" className="hover:text-foreground transition-colors">contact@novaboost.cloud</a></div>
+                <div className="space-y-1">
+                  <div>TikTok:</div>
+                  <div><a href="https://tiktok.com/@novaboost.app" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">@novaboost.app</a></div>
+                  <div><a href="https://tiktok.com/@novaboost.agency" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">@novaboost.agency</a></div>
+                  <div><a href="https://tiktok.com/@novaboost.live" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">@novaboost.live</a></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold text-foreground mb-3">Документы</h4>
+              <div className="space-y-2 text-muted-foreground">
+                <div><Link to="/privacy" className="hover:text-foreground transition-colors">Политика конфиденциальности</Link></div>
+                <div><Link to="/terms" className="hover:text-foreground transition-colors">Условия использования</Link></div>
+                <div><Link to="/offer" className="hover:text-foreground transition-colors">Договор оферты</Link></div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-12 border-t border-border pt-8 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} NovaBoost. Все права защищены.
+          <p>© {new Date().getFullYear()} NovaBoost. Все права защищены.</p>
+          <p className="mt-2">Разработано и поддерживается разработчиками команды NovaBoost</p>
         </div>
       </div>
     </footer>
