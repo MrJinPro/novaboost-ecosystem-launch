@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
@@ -16,6 +17,7 @@ import { LegalSection } from "@/components/LegalSection";
 import { FAQSection } from "@/components/FAQSection";
 import { CTASection } from "@/components/CTASection";
 import { FooterSection } from "@/components/FooterSection";
+import { saveVisit } from "@/lib/storage";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,6 +35,17 @@ function Index() {
   const scrollToJoin = () => {
     document.getElementById("join")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    saveVisit({
+      path: window.location.pathname,
+      referrer: document.referrer || "direct",
+      userAgent: window.navigator.userAgent,
+      language: window.navigator.language,
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">

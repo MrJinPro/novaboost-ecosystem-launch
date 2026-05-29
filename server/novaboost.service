@@ -1,0 +1,19 @@
+[Unit]
+Description=NovaBoost API server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/novaboost
+ExecStart=/usr/bin/node /var/www/novaboost/server/server.cjs
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=PORT=4000
+Environment=ADMIN_USER=admin@novaboost.cloud
+Environment=ADMIN_PASS=An041219na.27
+User=novaboost
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

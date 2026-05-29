@@ -14,7 +14,7 @@ export function JoinModal({ open, onClose }: { open: boolean; onClose: () => voi
 
   const handleProceed = () => {
     if (!canSubmit) return;
-    window.open(STREAMER_APPLICATION_URL, "_blank", "noopener,noreferrer");
+    window.location.href = "/submit?type=streamer";
     onClose();
   };
 
@@ -105,7 +105,7 @@ export function JoinModal({ open, onClose }: { open: boolean; onClose: () => voi
           Перейти к заявке
         </button>
         <p className="mt-3 text-center text-xs text-muted-foreground">
-          Форма откроется в новой вкладке
+          Форма откроется на этой странице
         </p>
       </div>
     </div>
