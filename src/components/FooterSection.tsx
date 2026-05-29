@@ -48,6 +48,7 @@ export function FooterSection() {
                 <div><Link to="/privacy" className="hover:text-foreground transition-colors">Политика конфиденциальности</Link></div>
                 <div><Link to="/terms" className="hover:text-foreground transition-colors">Условия использования</Link></div>
                 <div><Link to="/offer" className="hover:text-foreground transition-colors">Договор оферты</Link></div>
+                <div><Link to="/rules" className="hover:text-foreground transition-colors">Правила участия</Link></div>
               </div>
             </div>
           </div>
