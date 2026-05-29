@@ -19,18 +19,18 @@ export function HeroSection({ onJoinClick }: { onJoinClick: () => void }) {
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs text-muted-foreground">
           <span className="inline-block h-2 w-2 rounded-full bg-primary animate-pulse" />
-          Готовимся к официальной регистрации TikTok Agency
+          Официальный партнёр TikTok LIVE
         </div>
 
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-7xl">
           <span className="text-foreground">NovaBoost — </span>
-          <span className="text-gradient">новая эра роста</span>
+          <span className="text-gradient">экосистема развития</span>
           <br />
           <span className="text-foreground">TikTok LIVE стримеров</span>
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-          Мы не просто агентство. Мы создаём экосистему роста.
+          Агентство, обучение, технологии и поддержка для стримеров нового поколения.
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
