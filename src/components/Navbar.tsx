@@ -3,8 +3,9 @@ import logoImg from "@/assets/novaboost-logo.png";
 
 const navLinks = [
   { label: "О нас", href: "#about" },
-  { label: "Преимущества", href: "#benefits" },
   { label: "Экосистема", href: "#ecosystem" },
+  { label: "Документы", href: "#legal" },
+  { label: "FAQ", href: "#faq" },
   { label: "Команда", href: "#team" },
 ];
 

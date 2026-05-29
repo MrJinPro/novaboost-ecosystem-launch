@@ -18,9 +18,13 @@ export function AboutSection() {
         <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
           Мы строим <span className="text-gradient">будущее стриминга</span>
         </h2>
-        <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-          NovaBoost — это экосистема, созданная стримерами для стримеров. Мы объединяем технологии,
-          обучение и поддержку в единую платформу роста на TikTok LIVE.
+        <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
+          NovaBoost — это не просто агентство. Мы строим экосистему для стримеров, объединяющую
+          обучение, аналитику, программные решения, поддержку, развитие контента и карьерный рост.
+        </p>
+        <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
+          Наша цель — создать среду, в которой стример получает всё необходимое для профессионального
+          развития: технологии собственной разработки, академию, кураторов и сообщество.
         </p>
 
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

@@ -6,11 +6,11 @@ import toolsImg from "@/assets/novaboost-tools.png";
 import liveImg from "@/assets/novaboost-live.png";
 
 const products = [
-  { img: toolsImg, name: "NovaBoost Academy", desc: "Обучающая платформа для стримеров. Курсы, вебинары и персональные программы развития. Часть экосистемы NovaBoost Tools.", tag: "Обучение" },
-  { img: mobileImg, name: "NovaBoost Mobile", desc: "Мобильное приложение для управления стримами, отслеживания статистики, озвучки чата и подарков на ходу.", tag: "Мобайл" },
-  { img: desktopImg, name: "NovaBoost Desktop", desc: "Десктоп-платформа с расширенными инструментами: аналитика, озвучка чата, оверлеи, анимации, виджеты и многое другое.", tag: "Десктоп" },
-  { img: toolsImg, name: "NovaBoost Tools", desc: "Эксклюзивный софт для стримеров: оверлеи, виджеты, озвучка чата и подарков, анимации, автоматизация и кастомизация.", tag: "Инструменты" },
-  { img: liveImg, name: "NovaBoost Live", desc: "Платформа роста для TikTok LIVE. Аналитика в реальном времени, рекомендации и инструменты для стримов.", tag: "LIVE" },
+  { img: toolsImg, name: "NovaBoost Academy", desc: "Обучающая платформа: курсы, вебинары и персональные программы развития стримеров.", future: "Сертификации, AI-ментор, разборы эфиров", status: "В разработке", tag: "Обучение" },
+  { img: mobileImg, name: "NovaBoost Mobile", desc: "Управление стримом и статистикой на ходу: уведомления, чат, подарки.", future: "Push-аналитика, удалённый контроль виджетов", status: "Скоро", tag: "Мобайл" },
+  { img: desktopImg, name: "NovaBoost Desktop", desc: "Десктоп-платформа с расширенными инструментами для эфира.", future: "Сцены, мульти-стрим, кастомные плагины", status: "В разработке", tag: "Десктоп" },
+  { img: toolsImg, name: "NovaBoost Tools", desc: "Оверлеи, виджеты, озвучка чата и подарков, анимации, автоматизация и кастомизация.", future: "Магазин виджетов, AI-голоса", status: "Бета", tag: "Инструменты" },
+  { img: liveImg, name: "NovaBoost Live", desc: "Аналитика TikTok LIVE в реальном времени, рекомендации и инструменты роста.", future: "Прогноз метрик, AI-советник по эфиру", status: "Бета", tag: "LIVE" },
 ];
 
 export function EcosystemSection() {
@@ -45,11 +45,20 @@ export function EcosystemSection() {
                     style={{ animation: `float ${3 + i * 0.5}s ease-in-out infinite` }}
                   />
                 </div>
-                <div className="mb-3 inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                  {p.tag}
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    {p.tag}
+                  </span>
+                  <span className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
+                    {p.status}
+                  </span>
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-foreground">{p.name}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+                <div className="mt-4 pt-4 border-t border-border/50">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70 mb-1">Скоро</div>
+                  <p className="text-xs text-foreground/80 leading-relaxed">{p.future}</p>
+                </div>
               </div>
             </div>
           ))}

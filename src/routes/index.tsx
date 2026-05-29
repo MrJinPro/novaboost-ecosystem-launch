@@ -1,15 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
+import { TrustSection } from "@/components/TrustSection";
 import { AboutSection } from "@/components/AboutSection";
+import { ForWhomSection } from "@/components/ForWhomSection";
 import { MythsSection } from "@/components/MythsSection";
 import { BenefitsSection } from "@/components/BenefitsSection";
 import { EcosystemSection } from "@/components/EcosystemSection";
+import { ResultsSection } from "@/components/ResultsSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { WhyUsSection } from "@/components/WhyUsSection";
 import { TeamSection } from "@/components/TeamSection";
+import { JoinSection } from "@/components/JoinSection";
+import { LegalSection } from "@/components/LegalSection";
+import { FAQSection } from "@/components/FAQSection";
 import { CTASection } from "@/components/CTASection";
-import { JoinModal } from "@/components/JoinModal";
 import { FooterSection } from "@/components/FooterSection";
 
 export const Route = createFileRoute("/")({
@@ -25,22 +30,29 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => setModalOpen(true);
+  const scrollToJoin = () => {
+    document.getElementById("join")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar onJoinClick={openModal} />
-      <HeroSection onJoinClick={openModal} />
+      <Navbar onJoinClick={scrollToJoin} />
+      <HeroSection onJoinClick={scrollToJoin} />
+      <TrustSection />
       <AboutSection />
+      <ForWhomSection />
       <MythsSection />
       <BenefitsSection />
       <EcosystemSection />
+      <ResultsSection />
+      <TestimonialsSection />
       <WhyUsSection />
       <TeamSection />
-      <CTASection onJoinClick={openModal} />
+      <JoinSection />
+      <LegalSection />
+      <FAQSection />
+      <CTASection onJoinClick={scrollToJoin} />
       <FooterSection />
-      <JoinModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }
