@@ -1,11 +1,11 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const fs = require('fs');
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
+const fs = require("fs");
 
-const dataDir = path.resolve(__dirname, '..', 'data');
+const dataDir = path.resolve(__dirname, "..", "data");
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
-const DB_PATH = path.join(dataDir, 'db.sqlite');
+const DB_PATH = path.join(dataDir, "db.sqlite");
 const db = new sqlite3.Database(DB_PATH);
 
 db.serialize(() => {
@@ -54,9 +54,9 @@ db.serialize(() => {
     });
   };
 
-  ensureSubmissionColumn('tiktokUsername', 'TEXT');
-  ensureSubmissionColumn('discordUsername', 'TEXT');
-  ensureSubmissionColumn('telegramUsername', 'TEXT');
+  ensureSubmissionColumn("tiktokUsername", "TEXT");
+  ensureSubmissionColumn("discordUsername", "TEXT");
+  ensureSubmissionColumn("telegramUsername", "TEXT");
 });
 
 module.exports = {

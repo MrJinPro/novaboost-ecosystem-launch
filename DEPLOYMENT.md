@@ -1,82 +1,352 @@
-# NovaBoost Deployment
+# NovaBoost: установка на VPS Ubuntu 22.04
 
-## Локальный git commit и push
+NovaBoost в текущем виде — это не статический SPA-сайт. Это TanStack Start SSR-приложение с отдельными Express API routes и SQLite.
 
-1. Добавь изменения в git:
-```bash
-cd /d d:\Projects\agency
-npm install
-git add .
-git commit -m "Add server deployment configs, Express API, admin auth and streamer form fields"
-git push origin main
+Правильная production-схема:
+
+```text
+nginx
+  ├── статические файлы из /var/www/novaboost/dist/client
+  └── proxy -> Node.js :4000
+        └── server/server.cjs
+              ├── /api/* через Express + SQLite
+              └── HTML-страницы через dist/server/server.js, TanStack Start SSR
 ```
 
-> Если ветка не `main`, замени на свою.
+Node.js нужен обязательно, потому что после сборки нет файла `dist/client/index.html`, а HTML генерируется SSR-сервером.
 
-## Подготовка на сервере
+## 1. Подключиться к VPS
 
-На сервере в Ubuntu 22.04 выполните:
+```bash
+ssh root@SERVER_IP
+```
+
+Замените `SERVER_IP` на IP вашего сервера.
+
+## 2. Обновить систему и поставить зависимости
 
 ```bash
 sudo apt update
-sudo apt install -y curl git nginx build-essential python3 pkg-config libsqlite3-dev
+sudo apt upgrade -y
+sudo apt install -y curl git nginx build-essential python3 pkg-config libsqlite3-dev ca-certificates
+```
+
+## 3. Установить Node.js 20
+
+```bash
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
+node -v
+npm -v
+```
+
+Node должен быть версии `20.x` или выше.
+
+## 4. Создать системного пользователя и папки проекта
+
+```bash
 sudo useradd -m -s /bin/bash novaboost || true
 sudo mkdir -p /var/www/novaboost
+sudo mkdir -p /etc/novaboost
 sudo chown -R novaboost:www-data /var/www/novaboost
 sudo chmod -R 750 /var/www/novaboost
 ```
 
-## Клонирование в папку на сервере
+## 5. Создать production env-файл
+
+```bash
+sudo tee /etc/novaboost/novaboost.env >/dev/null <<'EOF'
+PORT=4000
+ADMIN_USER=admin@novaboost.cloud
+ADMIN_PASS=CHANGE_THIS_STRONG_PASSWORD
+EOF
+```
+
+Обязательно замените `CHANGE_THIS_STRONG_PASSWORD` на нормальный пароль.
+
+```bash
+sudo chown root:www-data /etc/novaboost/novaboost.env
+sudo chmod 640 /etc/novaboost/novaboost.env
+```
+
+## 6. Скачать проект
 
 ```bash
 cd /var/www/novaboost
-sudo -u novaboost git clone <REPO_URL> .
+sudo -u novaboost git clone https://github.com/MrJinPro/novaboost-ecosystem-launch .
+```
+
+Если папка уже не пустая, сначала проверьте её содержимое:
+
+```bash
+ls -la /var/www/novaboost
+```
+
+## 7. Установить npm-зависимости
+
+```bash
+cd /var/www/novaboost
 sudo -u novaboost npm ci
+```
+
+Если на сервере возникнет ошибка с `sqlite3`, пересоберите нативный модуль:
+
+```bash
+cd /var/www/novaboost
 sudo -u novaboost npm run rebuild:sqlite3
+```
+
+## 8. Собрать проект
+
+```bash
+cd /var/www/novaboost
 sudo -u novaboost npm run build
 ```
 
-> Если после `npm ci` сервис всё ещё падает на `node_sqlite3.node`, значит бинарный модуль sqlite3 был собран под другую версию glibc. В этом случае повторно выполните `sudo -u novaboost npm run rebuild:sqlite3`.
-
-## Настройка сервиса backend
-
-Скопируйте `server/novaboost.service` в `/etc/systemd/system/`:
+После успешной сборки должны появиться:
 
 ```bash
-sudo cp server/novaboost.service /etc/systemd/system/novaboost.service
+ls -la /var/www/novaboost/dist
+ls -la /var/www/novaboost/dist/client
+ls -la /var/www/novaboost/dist/server
+```
+
+Ожидаемо:
+
+```text
+dist/client  - клиентские JS/CSS/assets
+dist/server  - SSR bundle TanStack Start
+```
+
+## 9. Подготовить SQLite-папку
+
+```bash
+cd /var/www/novaboost
+sudo -u novaboost mkdir -p data
+sudo chown -R novaboost:www-data /var/www/novaboost/data
+sudo chmod 750 /var/www/novaboost/data
+```
+
+База создастся автоматически при старте:
+
+```text
+/var/www/novaboost/data/db.sqlite
+```
+
+## 10. Проверить Node-сервер вручную
+
+```bash
+cd /var/www/novaboost
+sudo -u novaboost env $(cat /etc/novaboost/novaboost.env | xargs) node server/server.cjs
+```
+
+В другом SSH-окне проверьте:
+
+```bash
+curl -I http://127.0.0.1:4000/
+curl http://127.0.0.1:4000/api/health
+```
+
+Должно быть:
+
+```text
+HTTP/1.1 200 OK
+{"ok":true}
+```
+
+Остановите ручной запуск:
+
+```bash
+Ctrl+C
+```
+
+## 11. Установить systemd service
+
+```bash
+sudo cp /var/www/novaboost/server/novaboost.service /etc/systemd/system/novaboost.service
 sudo systemctl daemon-reload
-sudo systemctl enable novaboost.service
+```
+
+Запустить сервис:
+
+```bash
 sudo systemctl start novaboost.service
+```
+
+Включить автозапуск после ребута:
+
+```bash
+sudo systemctl enable novaboost.service
+```
+
+Проверить статус:
+
+```bash
 sudo systemctl status novaboost.service
 ```
 
-## Настройка nginx
-
-Скопируйте `server/nginx.novaboost.conf` в `/etc/nginx/sites-available/novaboost.conf`:
+Смотреть логи:
 
 ```bash
-sudo cp server/nginx.novaboost.conf /etc/nginx/sites-available/novaboost.conf
-sudo ln -sf /etc/nginx/sites-available/novaboost.conf /etc/nginx/sites-enabled/novaboost.conf
-sudo nginx -t
-sudo systemctl restart nginx
+sudo journalctl -u novaboost.service -f
 ```
 
-## Проверка
+В unit-файле уже включено:
 
-- Открой `http://agency.novaboost.cloud`
-- Проверка API: `http://agency.novaboost.cloud/api/health`
+```text
+Restart=always
+RestartSec=5
+WantedBy=multi-user.target
+```
 
-## Обновление с сервера
+Это значит: systemd поднимет сервис после ребута и перезапустит его при падении.
 
-При следующих изменениях на локальной машине:
+## 12. Проверить Node-сервис через localhost
+
+```bash
+curl -I http://127.0.0.1:4000/
+curl http://127.0.0.1:4000/api/health
+```
+
+## 13. Установить nginx config
+
+```bash
+sudo cp /var/www/novaboost/server/nginx.novaboost.conf /etc/nginx/sites-available/novaboost.conf
+sudo ln -sf /etc/nginx/sites-available/novaboost.conf /etc/nginx/sites-enabled/novaboost.conf
+```
+
+Если включён дефолтный сайт nginx и он мешает, отключите его:
+
+```bash
+sudo rm -f /etc/nginx/sites-enabled/default
+```
+
+Проверить nginx:
+
+```bash
+sudo nginx -t
+```
+
+Перезагрузить nginx:
+
+```bash
+sudo systemctl reload nginx
+```
+
+## 14. Проверить сайт через домен
+
+```bash
+curl -I http://agency.novaboost.cloud/
+curl http://agency.novaboost.cloud/api/health
+```
+
+В браузере откройте:
+
+```text
+http://agency.novaboost.cloud
+```
+
+## 15. Проверить автозапуск после ребута
+
+```bash
+sudo reboot
+```
+
+После переподключения:
+
+```bash
+ssh root@SERVER_IP
+sudo systemctl status novaboost.service
+sudo systemctl status nginx
+curl http://127.0.0.1:4000/api/health
+curl http://agency.novaboost.cloud/api/health
+```
+
+## 16. Проверить перезапуск после падения
+
+Найдите PID процесса:
+
+```bash
+pgrep -af "server/server.cjs"
+```
+
+Убейте процесс:
+
+```bash
+sudo pkill -f "server/server.cjs"
+```
+
+Через несколько секунд проверьте, что systemd поднял его снова:
+
+```bash
+sleep 7
+sudo systemctl status novaboost.service
+pgrep -af "server/server.cjs"
+curl http://127.0.0.1:4000/api/health
+```
+
+## 17. Обновление проекта на VPS
 
 ```bash
 cd /var/www/novaboost
 sudo -u novaboost git pull origin main
-npm install
-npm run build
+sudo -u novaboost npm ci
+sudo -u novaboost npm run build
 sudo systemctl restart novaboost.service
 sudo systemctl reload nginx
+```
+
+## 18. Полезные команды диагностики
+
+Статус Node-сервиса:
+
+```bash
+sudo systemctl status novaboost.service
+```
+
+Логи Node-сервиса:
+
+```bash
+sudo journalctl -u novaboost.service -n 200 --no-pager
+sudo journalctl -u novaboost.service -f
+```
+
+Статус nginx:
+
+```bash
+sudo systemctl status nginx
+```
+
+Проверка nginx config:
+
+```bash
+sudo nginx -t
+```
+
+Логи nginx:
+
+```bash
+sudo tail -n 100 /var/log/nginx/novaboost.access.log
+sudo tail -n 100 /var/log/nginx/novaboost.error.log
+```
+
+Проверка базы:
+
+```bash
+ls -lah /var/www/novaboost/data/db.sqlite
+```
+
+## 19. Итоговая команда запуска
+
+Вручную запускать приложение в production не нужно. Его запускает systemd:
+
+```bash
+sudo systemctl start novaboost.service
+sudo systemctl enable novaboost.service
+```
+
+Главная production-точка входа:
+
+```text
+/var/www/novaboost/server/server.cjs
 ```

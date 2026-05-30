@@ -1,6 +1,7 @@
 [Unit]
-Description=NovaBoost API server
-After=network.target
+Description=NovaBoost SSR and API server
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
@@ -10,8 +11,7 @@ Restart=always
 RestartSec=5
 Environment=NODE_ENV=production
 Environment=PORT=4000
-Environment=ADMIN_USER=admin@novaboost.cloud
-Environment=ADMIN_PASS=An041219na.27
+EnvironmentFile=-/etc/novaboost/novaboost.env
 User=novaboost
 Group=www-data
 
