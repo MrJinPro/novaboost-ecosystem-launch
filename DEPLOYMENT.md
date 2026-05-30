@@ -31,16 +31,16 @@ sudo apt upgrade -y
 sudo apt install -y curl git nginx build-essential python3 pkg-config libsqlite3-dev ca-certificates
 ```
 
-## 3. Установить Node.js 20
+## 3. Установить Node.js 22
 
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 node -v
 npm -v
 ```
 
-Node должен быть версии `20.x` или выше.
+Node должен быть версии `22.12.0` или выше.
 
 ## 4. Создать системного пользователя и папки проекта
 
