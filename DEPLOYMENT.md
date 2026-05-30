@@ -257,7 +257,59 @@ curl http://agency.novaboost.cloud/api/health
 http://agency.novaboost.cloud
 ```
 
-## 15. Проверить автозапуск после ребута
+## 15. Получить HTTPS-сертификат Let's Encrypt
+
+Перед этим должно уже работать:
+
+```bash
+curl -I http://agency.novaboost.cloud/
+curl http://agency.novaboost.cloud/api/health
+```
+
+Установите Certbot через snap:
+
+```bash
+sudo snap install core
+sudo snap refresh core
+sudo apt remove -y certbot 2>/dev/null || true
+sudo snap install --classic certbot
+sudo ln -sf /snap/bin/certbot /usr/bin/certbot
+```
+
+Получите сертификат и разрешите Certbot автоматически поправить nginx:
+
+```bash
+sudo certbot --nginx -d agency.novaboost.cloud -m admin@novaboost.cloud --agree-tos --no-eff-email --redirect
+```
+
+Проверьте nginx и HTTPS:
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+curl -I https://agency.novaboost.cloud/
+curl https://agency.novaboost.cloud/api/health
+```
+
+Проверьте автообновление сертификата:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+Важно: после Certbot не копируйте заново файл:
+
+```bash
+sudo cp /var/www/novaboost/server/nginx.novaboost.conf /etc/nginx/sites-available/novaboost.conf
+```
+
+Эта команда перезапишет SSL-настройки, которые добавил Certbot. Если случайно перезаписали nginx config, повторите:
+
+```bash
+sudo certbot --nginx -d agency.novaboost.cloud -m admin@novaboost.cloud --agree-tos --no-eff-email --redirect
+```
+
+## 16. Проверить автозапуск после ребута
 
 ```bash
 sudo reboot
@@ -273,7 +325,7 @@ curl http://127.0.0.1:4000/api/health
 curl http://agency.novaboost.cloud/api/health
 ```
 
-## 16. Проверить перезапуск после падения
+## 17. Проверить перезапуск после падения
 
 Найдите PID процесса:
 
@@ -296,7 +348,7 @@ pgrep -af "server/server.cjs"
 curl http://127.0.0.1:4000/api/health
 ```
 
-## 17. Обновление проекта на VPS
+## 18. Обновление проекта на VPS
 
 ```bash
 cd /var/www/novaboost
@@ -307,7 +359,9 @@ sudo systemctl restart novaboost.service
 sudo systemctl reload nginx
 ```
 
-## 18. Полезные команды диагностики
+Не копируйте nginx config из репозитория после настройки HTTPS, если не хотите заново запускать Certbot.
+
+## 19. Полезные команды диагностики
 
 Статус Node-сервиса:
 
@@ -347,7 +401,7 @@ sudo tail -n 100 /var/log/nginx/novaboost.error.log
 ls -lah /var/www/novaboost/data/db.sqlite
 ```
 
-## 19. Итоговая команда запуска
+## 20. Итоговая команда запуска
 
 Вручную запускать приложение в production не нужно. Его запускает systemd:
 
