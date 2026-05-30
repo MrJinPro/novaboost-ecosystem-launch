@@ -12,6 +12,8 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "start:server": "node server/server.cjs",
+    "rebuild:sqlite3": "npm rebuild sqlite3 --build-from-source --update-binary --unsafe-perm",
+    "postinstall": "npm run rebuild:sqlite3",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

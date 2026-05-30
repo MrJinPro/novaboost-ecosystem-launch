@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/var/www/novaboost
-ExecStart=/usr/bin/node /var/www/novaboost/server/server.cjs
+ExecStart=/usr/bin/env node /var/www/novaboost/server/server.cjs
 Restart=always
 RestartSec=5
 Environment=NODE_ENV=production

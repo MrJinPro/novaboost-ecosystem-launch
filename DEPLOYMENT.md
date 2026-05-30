@@ -19,7 +19,9 @@ git push origin main
 
 ```bash
 sudo apt update
-sudo apt install -y nodejs npm git nginx
+sudo apt install -y curl git nginx build-essential python3 pkg-config libsqlite3-dev
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
 sudo useradd -m -s /bin/bash novaboost || true
 sudo mkdir -p /var/www/novaboost
 sudo chown -R novaboost:www-data /var/www/novaboost
@@ -31,9 +33,12 @@ sudo chmod -R 750 /var/www/novaboost
 ```bash
 cd /var/www/novaboost
 sudo -u novaboost git clone <REPO_URL> .
-npm install
-npm run build
+sudo -u novaboost npm ci
+sudo -u novaboost npm run rebuild:sqlite3
+sudo -u novaboost npm run build
 ```
+
+> Если после `npm ci` сервис всё ещё падает на `node_sqlite3.node`, значит бинарный модуль sqlite3 был собран под другую версию glibc. В этом случае повторно выполните `sudo -u novaboost npm run rebuild:sqlite3`.
 
 ## Настройка сервиса backend
 
