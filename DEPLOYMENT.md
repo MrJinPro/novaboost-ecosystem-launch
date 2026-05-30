@@ -71,12 +71,23 @@ sudo chmod 640 /etc/novaboost/novaboost.env
 
 ## 6. Скачать проект
 
+Если это первая установка на чистую папку:
+
 ```bash
 cd /var/www/novaboost
 sudo -u novaboost git clone https://github.com/MrJinPro/novaboost-ecosystem-launch .
 ```
 
-Если папка уже не пустая, сначала проверьте её содержимое:
+Если проект уже был склонирован раньше и нужно подтянуть свежую версию из GitHub:
+
+```bash
+cd /var/www/novaboost
+sudo -u novaboost git pull origin main
+```
+
+Важно: команда пишется `origin`, не `orgin`.
+
+Если папка уже не пустая и вы не уверены, что внутри, сначала проверьте её содержимое:
 
 ```bash
 ls -la /var/www/novaboost
