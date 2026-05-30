@@ -23,19 +23,22 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "NovaBoost — Экосистема роста TikTok LIVE стримеров" },
-      { name: "description", content: "NovaBoost — экосистема нового поколения для TikTok LIVE стримеров. Обучение, инструменты, поддержка и рост." },
+      {
+        name: "description",
+        content:
+          "NovaBoost — экосистема нового поколения для TikTok LIVE стримеров. Обучение, инструменты, поддержка и рост.",
+      },
       { property: "og:title", content: "NovaBoost — Экосистема роста TikTok LIVE стримеров" },
-      { property: "og:description", content: "Мы не просто агентство. Мы создаём экосистему роста." },
+      {
+        property: "og:description",
+        content: "Мы не просто агентство. Мы создаём экосистему роста.",
+      },
     ],
   }),
   component: Index,
 });
 
 function Index() {
-  const scrollToJoin = () => {
-    document.getElementById("join")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -49,8 +52,8 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar onJoinClick={scrollToJoin} />
-      <HeroSection onJoinClick={scrollToJoin} />
+      <Navbar />
+      <HeroSection />
       <TrustSection />
       <AboutSection />
       <ForWhomSection />
@@ -64,7 +67,7 @@ function Index() {
       <JoinSection />
       <LegalSection />
       <FAQSection />
-      <CTASection onJoinClick={scrollToJoin} />
+      <CTASection />
       <FooterSection />
     </div>
   );

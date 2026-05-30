@@ -1,6 +1,6 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
-export function CTASection({ onJoinClick }: { onJoinClick: () => void }) {
+export function CTASection() {
   const ref = useScrollAnimation();
 
   return (
@@ -13,14 +13,15 @@ export function CTASection({ onJoinClick }: { onJoinClick: () => void }) {
           Стань частью <span className="text-gradient">NovaBoost</span>
         </h2>
         <p className="mx-auto mt-6 max-w-lg text-lg text-muted-foreground">
-          Присоединяйся к экосистеме нового поколения. Стримеры, кураторы, разработчики — нам нужны именно вы.
+          Присоединяйся к экосистеме нового поколения. Стримеры, кураторы, разработчики — нам нужны
+          именно вы.
         </p>
-        <button
-          onClick={onJoinClick}
-          className="btn-primary-glow mt-10 rounded-2xl px-10 py-5 text-lg font-bold"
+        <a
+          href="#join"
+          className="btn-primary-glow mt-10 inline-flex rounded-2xl px-10 py-5 text-lg font-bold"
         >
           Вступить в команду
-        </button>
+        </a>
       </div>
     </section>
   );

@@ -23,6 +23,8 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
+        "script-src": ["'self'", "'unsafe-inline'"],
+        "script-src-elem": ["'self'", "'unsafe-inline'"],
         "upgrade-insecure-requests": null,
       },
     },
