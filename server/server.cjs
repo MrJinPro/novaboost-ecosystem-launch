@@ -19,7 +19,15 @@ const SSR_ENTRY = path.resolve(__dirname, "..", "dist", "server", "server.js");
 
 let startServerPromise;
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "upgrade-insecure-requests": null,
+      },
+    },
+  }),
+);
 app.use(cors());
 app.set("trust proxy", 1);
 
