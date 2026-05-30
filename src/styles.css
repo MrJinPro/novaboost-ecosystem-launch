@@ -56,32 +56,32 @@
   --popover-foreground: oklch(0.96 0.005 280);
   --primary: oklch(0.65 0.28 285);
   --primary-foreground: oklch(0.98 0.005 280);
-  --secondary: oklch(0.20 0.03 280);
-  --secondary-foreground: oklch(0.90 0.01 280);
+  --secondary: oklch(0.2 0.03 280);
+  --secondary-foreground: oklch(0.9 0.01 280);
   --muted: oklch(0.18 0.02 280);
   --muted-foreground: oklch(0.65 0.02 280);
   --accent: oklch(0.55 0.25 260);
   --accent-foreground: oklch(0.98 0.005 280);
-  --destructive: oklch(0.60 0.22 25);
+  --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.98 0.005 280);
   --border: oklch(1 0 0 / 8%);
   --input: oklch(1 0 0 / 12%);
   --ring: oklch(0.65 0.28 285);
   --neon: oklch(0.65 0.28 285);
-  --neon-blue: oklch(0.60 0.22 260);
-  --neon-glow: oklch(0.70 0.30 285);
+  --neon-blue: oklch(0.6 0.22 260);
+  --neon-glow: oklch(0.7 0.3 285);
   --surface: oklch(0.14 0.02 280);
   --surface-elevated: oklch(0.18 0.025 280);
   --sidebar: oklch(0.13 0.025 280);
   --sidebar-foreground: oklch(0.96 0.005 280);
   --sidebar-primary: oklch(0.65 0.28 285);
   --sidebar-primary-foreground: oklch(0.98 0.005 280);
-  --sidebar-accent: oklch(0.20 0.03 280);
+  --sidebar-accent: oklch(0.2 0.03 280);
   --sidebar-accent-foreground: oklch(0.96 0.005 280);
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.65 0.28 285);
-  --font-heading: 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
 }
 
 @layer base {
@@ -100,7 +100,12 @@
     overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
   }
 }
@@ -119,11 +124,15 @@
   }
 
   .glow-primary {
-    box-shadow: 0 0 40px oklch(0.65 0.28 285 / 30%), 0 0 80px oklch(0.65 0.28 285 / 10%);
+    box-shadow:
+      0 0 40px oklch(0.65 0.28 285 / 30%),
+      0 0 80px oklch(0.65 0.28 285 / 10%);
   }
 
   .glow-blue {
-    box-shadow: 0 0 40px oklch(0.60 0.22 260 / 30%), 0 0 80px oklch(0.60 0.22 260 / 10%);
+    box-shadow:
+      0 0 40px oklch(0.6 0.22 260 / 30%),
+      0 0 80px oklch(0.6 0.22 260 / 10%);
   }
 
   .text-gradient {
@@ -134,7 +143,7 @@
   }
 
   .text-gradient-warm {
-    background: linear-gradient(135deg, oklch(0.80 0.18 60), oklch(0.70 0.22 30));
+    background: linear-gradient(135deg, oklch(0.8 0.18 60), oklch(0.7 0.22 30));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -145,21 +154,35 @@
   }
 
   .gradient-border::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, oklch(0.65 0.28 285 / 50%), oklch(0.60 0.22 260 / 50%), transparent);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    background: linear-gradient(
+      135deg,
+      oklch(0.65 0.28 285 / 50%),
+      oklch(0.6 0.22 260 / 50%),
+      transparent
+    );
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     mask-composite: exclude;
     pointer-events: none;
   }
 
   .section-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.8s ease-out,
+      transform 0.8s ease-out;
+  }
+
+  .section-fade-in.section-animate-ready {
     opacity: 0;
     transform: translateY(40px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   }
 
   .section-fade-in.visible {
@@ -168,7 +191,9 @@
   }
 
   .hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .hover-lift:hover {
@@ -204,17 +229,33 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
